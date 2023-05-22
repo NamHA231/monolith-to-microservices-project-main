@@ -50,6 +50,8 @@ export class FeedUploadComponent implements OnInit {
   }
 
   onSubmit($event) {
+    console.log('vao');
+    
     $event.preventDefault();
     this.loadingController.create();
 
