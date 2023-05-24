@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - 15
+services:
+  - docker
+
+script:
+  - docker-compose -f docker-compose-build.yaml build --parallel
+  - docker tag udagram-frontend namha231/udagram-frontend:v1
+  - docker tag udagram-api-feed namha231/udagram-api-feed:v1
+  - docker tag udagram-api-user namha231/udagram-api-user:v1
+  - docker tag reverseproxy namha231/reverseproxy:v1
+  - echo "${{secrets.DOCKER_PASSWORD}}" | docker login -u "${{secrets.DOCKER_USERNAME}}" --password-stdin
+  - docker push namha231/udagram-frontend:v1
+  - docker push namha231/udagram-api-feed:v1
+  - docker push namha231/udagram-api-user:v1
+  - docker push namha231/reverseproxy:v1
